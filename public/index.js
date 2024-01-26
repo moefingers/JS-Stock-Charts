@@ -28,14 +28,13 @@ async function main() {
 
     const stocks = [GME, MSFT, DIS, BNTX]
 
-    console.log(stocks)
+    // console.log(stocks)
 
-    console.log(Chart)
+    // console.log(Chart)
 
 
     stocks.forEach( stock => stock.values.reverse())
 
-    // Time Chart
     new Chart(timeChartCanvas.getContext('2d'), {
         type: 'line',
         data: {
@@ -49,9 +48,63 @@ async function main() {
         }
     });
     
-    
-    
-    
+    new Chart(highestPriceChartCanvas.getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: stocks.map(stock => stock.meta.symbol),
+            datasets: [{
+                label: 'Highest',
+                backgroundColor: stocks.map(stock => (
+                    checkStockColor(stock.meta.symbol)
+                )),
+                borderColor: stocks.map(stock => (
+                    checkStockColor(stock.meta.symbol)
+                )),
+                data: stocks.map(stock => (
+                    returnHighest(stock.values)
+                ))
+            }]
+        }
+    });
+
+    new Chart(averagePriceChartCanvas.getContext('2d'), {
+        type: 'pie',
+        data: {
+            labels: stocks.map(stock => stock.meta.symbol),
+            datasets: [{
+                label: 'Average',
+                backgroundColor: stocks.map(stock => (
+                    checkStockColor(stock.meta.symbol)
+                )),
+                borderColor: stocks.map(stock => (
+                    checkStockColor(stock.meta.symbol)
+                )),
+                data: stocks.map(stock => (
+                    average(stock.values)
+                ))
+            }]
+        }
+    });
 }
+
+function returnHighest(array) {
+    let max = 0;
+    array.forEach(value => {
+        if (parseFloat(value.high) > max) {
+            max = value.high
+        }
+    })
+    return max
+}
+
+function average(array) {
+    let total = 0;
+    array.forEach(value => {
+        total += parseFloat(value.high)
+    })
+    return (total / array.length)
+}
+    
+    
 
 main()
