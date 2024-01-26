@@ -27,25 +27,28 @@ async function main() {
     const { GME, MSFT, DIS, BNTX } = data;
 
     const stocks = [GME, MSFT, DIS, BNTX]
-    stocks.forEach( stock => stock.values.reverse())
 
     console.log(stocks)
 
     console.log(Chart)
 
 
+    stocks.forEach( stock => stock.values.reverse())
+
+    // Time Chart
     new Chart(timeChartCanvas.getContext('2d'), {
         type: 'line',
         data: {
-            labels: stocks[0].values.map(value => value.datetime),
+            labels: stocks[0].values.reverse().map(value => value.datetime),
             datasets: stocks.map(stock => ({
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor:  checkStockColor(stock.meta.symbol),
-                borderColor: 'rgba(255, 99, 132, 1)'
+                label: stock.meta.symbol,
+                data: stock.values.reverse().map(value => parseFloat(value.high)),
+                backgroundColor: checkStockColor(stock.meta.symbol),
+                borderColor: checkStockColor(stock.meta.symbol),
             }))
         }
     });
+    
     
     
     
