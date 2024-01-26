@@ -13,6 +13,8 @@ async function main() {
     const stocks = [GME, MSFT, DIS, BNTX]
 
     console.log(stocks)
+
+    console.log(Chart)
 }
 
 main()
