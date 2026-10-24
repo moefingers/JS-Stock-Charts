@@ -1,0 +1,4 @@
+# pnpm settings for this app (pnpm >= 10 reads them from here, not from
+# package.json). Not a multi-package workspace: the file also marks this
+# directory as its own pnpm root, so pnpm doesn't walk up into a parent
+# workspace when the repo is checked out as a submodule.
