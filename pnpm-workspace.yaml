@@ -2,3 +2,11 @@
 # package.json). Not a multi-package workspace: the file also marks this
 # directory as its own pnpm root, so pnpm doesn't walk up into a parent
 # workspace when the repo is checked out as a submodule.
+#
+# fsevents 1.2.13 (live-server -> chokidar 2, macOS only) has an install
+# script that compiles a native file watcher; current Node has no prebuilt
+# binary for it, so the script needs C++ build tools. pnpm >= 11 refuses to
+# install while the script is unreviewed, so it stays off: chokidar then
+# falls back to fs.watch, and live-server reloads the page as before.
+allowBuilds:
+  fsevents: false
